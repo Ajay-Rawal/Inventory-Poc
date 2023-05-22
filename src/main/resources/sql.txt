@@ -1,0 +1,67 @@
+
+use inventory;
+
+CREATE TABLE user(
+	userId int PRIMARY KEY AUTO_INCREMENT,
+    userName VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    role VARCHAR(100) NOT NULL
+);
+
+SELECT * FROM USER;
+
+CREATE TABLE warehouse (
+  Wid INT NOT NULL AUTO_INCREMENT,
+  Wname VARCHAR(50) NOT NULL,
+  Waddress VARCHAR(100) NOT NULL,
+  PRIMARY KEY (Wid)
+);
+
+SELECT * FROM warehouse;
+
+CREATE TABLE category (
+  Cid INT NOT NULL AUTO_INCREMENT,
+  Cname VARCHAR(50) NOT NULL,
+  PRIMARY KEY (Cid)
+);
+
+SELECT * FROM category;
+
+CREATE TABLE product (
+  product_id INT PRIMARY KEY NOT NULL,
+  product_name VARCHAR(50) NOT NULL,
+  description VARCHAR(100),
+  price DECIMAL(10,2),
+  Pquantity INT,
+  Cid INT NOT NULL,
+  FOREIGN KEY (Cid) REFERENCES category(Cid)
+);
+
+SELECT * FROM product;
+
+
+CREATE TABLE inventorys (
+  inventory_id int NOT NULL,
+  Wid int NOT NULL,
+  product_id int NOT NULL,
+  PRIMARY KEY (inventory_id),
+  FOREIGN KEY (Wid) REFERENCES warehouse(Wid),
+  FOREIGN KEY (product_id) REFERENCES product(product_id)
+);
+
+SELECT * FROM inventorys;
+
+
+CREATE TABLE inventory_manager (
+  IMid INT PRIMARY KEY NOT NULL,
+  IMname VARCHAR(50) NOT NULL,
+  IMemail VARCHAR(100) NOT NULL,
+  IMphone VARCHAR(20) NOT NULL,
+  Wid INT NOT NULL,
+  FOREIGN KEY (Wid) REFERENCES warehouse(Wid)
+);
+
+SELECT * FROM inventory_manager;
+
+
