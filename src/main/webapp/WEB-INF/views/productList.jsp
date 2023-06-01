@@ -15,11 +15,11 @@
 	<div class="container mt-5">
 		<h1 class="text-center mb-5">Product List</h1>
 	
-	 <form action="/Inventory/search" method="GET">
+	<!--  <form action="/Inventory/search" method="GET">
   <label for="productId">Product ID:</label>
   <input type="text" id="product_id" name="product_id">
   <button type="submit">Search</button>
-</form>
+</form> -->
 	
 	
 	
@@ -33,8 +33,7 @@
 					<th>Quantity</th>
 					<th>Category Id</th>
 					 <th>User Id</th>
-					<th>Edit</th>
-					<th>Delete</th>
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -47,17 +46,46 @@
 						<td>${product.pquantity}</td>
 						<td>${product.cid}</td>
 						<td>${product.userId}</td>  
-						<td><a href="editProduct/${product.product_id}" class="btn btn-primary">Edit</a></td>
-						<td><a href="deleteproduct/${product.product_id}" class="btn btn-danger">Delete</a></td>
+		
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 
+		
+		
 		<div class="text-center mt-5">
-			<a href="addProduct" class="btn btn-success">Add New item</a>
+			<a href="ascending" class="btn btn-success">Ascending</a>
 		</div>
-	</div>
+		<div class="text-center mt-5">
+			<a href="descending" class="btn btn-success">Descending</a>
+		</div>
+		
+<!-- 		<div class="text-center mt-5">
+  <select onchange="sortProducts(this.value)">
+    <option value="ascending">Ascending</option>
+    <option value="descending">Descending</option>
+  </select>
+</div>
+
+
+
+<script>
+function sortProducts(sortOption) {
+
+	// Perform the sorting logic based on the selected option
+	if (sortOption === "ascending") {
+	// Sorting logic for ascending order
+	location.href = "ascending";
+	} else if (sortOption === "descending") {
+	// Sorting logic for descending order
+	location.href = "descending";
+	}
+	}
+</script> -->
+<br>
+<br>
+	
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

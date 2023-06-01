@@ -20,6 +20,7 @@ import com.valtech.dao.WarehouseDAO;
 import com.valtech.model.Product;
 import com.valtech.model.User;
 import com.valtech.model.Warehouse;
+import com.valtech.service.WarehouseService;
 
 @Controller
 public class WarehouseController {
@@ -33,66 +34,44 @@ public class WarehouseController {
 	@Autowired
 	UserDao userDao;
 	
+	@Autowired
+	WarehouseService warehouseService;
+	
 	@RequestMapping("/warehouseList")
 	public String listWarehouses(Model model) {
-		List<Warehouse> list = warehouseDAO.getAllWarehouses();
-		model.addAttribute("list", list);
-		return "warehouseList";
+		return warehouseService.listWarehouses(model);
 	}
 	
 
 	@RequestMapping(value = "/searchManager", method = RequestMethod.GET)
 	public String search(@RequestParam("userId") int userId, Model model) {
-		try {
-	  User user = userDao.getUserbyUserName(userId);
-	  model.addAttribute("user", user);
-	  System.out.println("mList");
-	  return "mList";
-		}
-		catch(Exception e){
-			return "error";
-			
-		}
+		return warehouseService.search(userId, model);
 	}
 	
 	@GetMapping("/warehouse/add")
 	public String showAddWarehouseForm(Model model) {
-		Warehouse warehouse = new Warehouse();
-		model.addAttribute("warehouse", warehouse);
-		return "addWarehouse";
+		return warehouseService.showAddWarehouseForm(model);
 	}
 	
 	@PostMapping("/warehouse/add")
 	public String addWarehouse(@ModelAttribute("warehouse") Warehouse warehouse, BindingResult result) {
-		if (result.hasErrors()) {
-			return "addWarehouse";
-		}
-		warehouseDAO.addWarehouse(warehouse);
-		return "redirect:/warehouse/list";
+		return warehouseService.addWarehouse(warehouse, result);
 	}
 	
 	@GetMapping("/warehouse/edit/{id}")
 	public String showEditWarehouseForm(@PathVariable("id") int id, Model model) {
-		Warehouse warehouse = warehouseDAO.getWarehouseById(id);
-		model.addAttribute("warehouse", warehouse);
-		return "editWarehouse";
+		return warehouseService.showEditWarehouseForm(id, model);
 	}
 	
 	@PostMapping("/warehouse/edit/{id}")
 	public String editWarehouse(@PathVariable("id") int id, @ModelAttribute("warehouse") Warehouse warehouse,
 			BindingResult result) {
-		if (result.hasErrors()) {
-			return "editWarehouse";
-		}
-		warehouse.setWid(id);
-		warehouseDAO.updateWarehouse(warehouse);
-		return "redirect:/warehouse/list";
+		return warehouseService.editWarehouse(id, warehouse, result);
 	}
 	
 	@GetMapping("/warehouse/delete/{id}")
 	public String deleteWarehouse(@PathVariable("id") int id) {
-		warehouseDAO.deleteWarehouse(id);
-		return "redirect:/warehouse/list";
+		return warehouseService.deleteWarehouse(id);
 	}
 
 	

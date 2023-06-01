@@ -176,6 +176,7 @@
 
     <a href="addManager" class="btn">Add New Manager</a>
     <a href="warehouseList" class="btn add-link">View Warehouse</a>
+     <a href="productList" class="btn add-link">View All Bike List</a>
 </div>
 
 
@@ -188,7 +189,7 @@
   <button type="submit">Search</button>
 </form> --%>
 
-<form action="/Inventory/search" method="GET">
+<%-- <form action="/Inventory/search" method="GET">
         <label for="searchOption">Search Option:</label>
         <br>
         <input type="radio" name="searchOption" value="product_id" id="searchOption_productId" checked>
@@ -206,7 +207,24 @@
         <br>
         <button type="submit">Search</button>
     </form>
-
+ --%>
+ <form action="/Inventory/search" method="GET">
+  <label for="searchOption">Select Option:</label>
+  <br>
+  <select name="searchOption" id="searchOption">
+    <option value="product_id" selected>By Product ID</option>
+    <option value="product_name">By Product Name</option>
+  </select>
+  <br>
+  <br>
+  <label for="searchCriteria">Search:</label>
+  <br>
+  <input type="text" name="searchCriteria" id="searchCriteria">
+  <br>
+  <br>
+  <button type="submit">Search</button>
+</form>
+ 
 
 </body>
 </html>

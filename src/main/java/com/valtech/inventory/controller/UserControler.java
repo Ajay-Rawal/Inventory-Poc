@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.valtech.dao.UserDao;
 import com.valtech.model.User;
+import com.valtech.service.UserService;
 
 @Controller
 public class UserControler {
 
 	@Autowired
-	private UserDao userDao;
+	UserDao userDao;
+	
+	@Autowired
+	UserService userService;
 
 	// list of user manager
 	@RequestMapping("/managerList")
 	public String getAllUsers(Model m) {
-		List<User> list = userDao.getUsers();
-		m.addAttribute("list", list);
-		System.out.println("list of roles displayed");
-		return "managerList";
+		return userService.getAllUsers(m);
 	}
 
 	// deleteing the user manager
 	@RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.GET)
 	public String delete(@PathVariable int id) {
-		userDao.deleteUser(id);
-		return "redirect:/managerList";
+		return userService.delete(id);
 	}
 	
 	
@@ -45,32 +45,26 @@ public class UserControler {
 	
 	  @RequestMapping("/addManager")  
 	    public String showform(Model m){  
-	    	m.addAttribute("command", new User());
-	    	return "addManager"; 
+	    	return userService.showform(m);
 	    }  
 	
 	// edit the manager
 	@RequestMapping(value = "/editManager/{id}")
 	public String edit(@PathVariable int id, Model m) {
-		User user = userDao.getUserbyUser(id);
-		m.addAttribute("command", user);
-		return "editManager";
+		return userService.edit(id, m);
 	}
 
 	@RequestMapping(value = "/editsave", method = RequestMethod.POST)
 	public String editsave(@ModelAttribute("user") User user) {
-		userDao.updateUser(user);
-		return "redirect:/managerList";
+		return userService.editsave(user);
 	}
 
 	
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(@ModelAttribute("user") User user) {
-		userDao.save(user);
-		return "redirect:/managerList";// will redirect to viewemp request mapping
-
-	}
+     return  userService.save(user);
+ 	}
 	
 }
     

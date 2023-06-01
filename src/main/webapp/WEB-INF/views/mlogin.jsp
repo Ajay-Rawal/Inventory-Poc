@@ -81,23 +81,21 @@
   <button type="submit">Search</button>
 </form> -->
 <form action="/Inventory/search" method="GET">
-        <label for="searchOption">Search Option:</label>
-        <br>
-        <input type="radio" name="searchOption" value="product_id" id="searchOption_productId" checked>
-        <label for="searchOption_productId">By Product ID</label>
-        <br>
-        <input type="radio" name="searchOption" value="product_name" id="searchOption_productName">
-        <label for="searchOption_productName">By Product Name</label>
-        <br>
-
-        <br>
-        <label for="searchCriteria">Search Criteria:</label>
-        <br>
-        <input type="text" name="searchCriteria" id="searchCriteria">
-        <br>
-        <br>
-        <button type="submit">Search</button>
-    </form>
+  <label for="searchOption">Search Option:</label>
+  <br>
+  <select name="searchOption" id="searchOption">
+    <option value="product_id" selected>By Product ID</option>
+    <option value="product_name">By Product Name</option>
+  </select>
+  <br>
+  <br>
+  <label for="searchCriteria">Search Criteria:</label>
+  <br>
+  <input type="text" name="searchCriteria" id="searchCriteria">
+  <br>
+  <br>
+  <button type="submit">Search</button>
+</form>
 	
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

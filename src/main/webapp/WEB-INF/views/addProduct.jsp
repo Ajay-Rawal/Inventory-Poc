@@ -79,7 +79,7 @@
 			<label for="product_name">Product Name:</label>
 			<form:input path="Product_name" id="product_name" />
 			<label for="description">Description:</label>
-			<form:input path="description" id="description" />
+			<form:input path="description" id="description" />	
 			<label for="price">Price:</label>
 			<form:input path="price" id="price" />
 			<label for="pquantity">Quantity:</label>

@@ -15,6 +15,7 @@ import com.valtech.dao.ProductDAO;
 import com.valtech.dao.UserDao;
 import com.valtech.model.Product;
 import com.valtech.model.User;
+import com.valtech.service.ProductService;
 
 
 
@@ -22,96 +23,81 @@ import com.valtech.model.User;
 public class ProductController {
 
 	@Autowired
-	ProductDAO productDAO;
+	ProductService productService;
 	
 	@Autowired
 	UserDao userDao;
 	
+	
+	
 	// list of All product
 	@RequestMapping("/productList")
 	public String getAllProducts(Model m) {
-		List<Product> list = productDAO.getAllProducts();
-		m.addAttribute("list", list);
-		System.out.println("list of Product displayed");
-		return "productList";
+		return productService.getAllProducts(m);
+		
 	
 }
 	
 	// edit the product
 		@RequestMapping(value = "/editProduct/{id}")
 		public String edit(@PathVariable int id, Model m) {
-			Product product = productDAO.getProductById(id);
-			m.addAttribute("command", product);
-			return "editProduct";
+			return productService.edit(id, m);
 		}
 		
 		
 		@RequestMapping(value = "/mlogin/editProductForManager/{id}")
 		public String editForManager(@PathVariable int id, Model m) {
-			Product product = productDAO.getProductById(id);
-			m.addAttribute("command", product);
-			return "editProductForManager";
+			return productService.editForManager(id, m);
 		}
 
 		@RequestMapping(value = "/editsaveproduct", method = RequestMethod.POST)
 		public String editsave(@ModelAttribute("product") Product product) {
-			productDAO.updateProduct(product);
-			return "redirect:/productList";
+			return productService.editsave(product);
 		}
 		
 		
 		@RequestMapping(value = "/mlogin/editProductForManager/editsaveproductForManager", method = RequestMethod.POST)
 		public String editsaveForManager(@ModelAttribute("product") Product product) {
-			Product product2 =productDAO.getProductById(product.getProduct_id());
-			productDAO.updateProduct(product);			
-			return "redirect:/mlogin/"+product2.getUserId();
+			return productService.editsaveForManager(product);
 		}
 		
 		
 		 @RequestMapping("/addProduct")  
 		    public String showform(Model m){  
-		    	m.addAttribute("command", new Product());
-		    	return "addProduct"; 
+		    return productService.showform(m);
 		    }  
-
+		 
 		 
 		 @RequestMapping("mlogin/addProductForManager/{userId}")  
 		    public String showformManager(@PathVariable int userId,  Model m){  
-		    	m.addAttribute("command", new Product());
-		    	m.addAttribute("userId", userId);
-		    	return "addProductForManager"; 
+		    return productService.showformManager(userId, m); 
 		    } 
 		
-		
+		 
 
 		@RequestMapping(value = "/saveproduct", method = RequestMethod.POST)
 		public String save(@ModelAttribute("product") Product product) {
-			productDAO.save(product);
-			return "redirect:/productList";// will redirect to viewemp request mapping
+		return productService.save(product);
 
 		}
 		
 		 	
 		@RequestMapping(value = "mlogin/addProductForManager/saveproductForManager", method = RequestMethod.POST)
 		public String saveForManager(@ModelAttribute("product") Product product) {
-			productDAO.save(product);
-			return "redirect:/mlogin/"+product.getUserId();// will redirect to viewemp request mapping
+		return productService.saveForManager(product);// will redirect to viewemp request mapping
 
 		}
 		
 		// deleteing the Products
 		@RequestMapping(value = "/deleteproduct/{id}", method = RequestMethod.GET)
 		public String delete(@PathVariable int id) {
-			productDAO.deleteProduct(id);
-			return "redirect:/productList";
+			return productService.delete(id);
 		}
 		
 		
 		@RequestMapping(value = "mlogin/deleteproductForManager/{id}", method = RequestMethod.GET)
 		public String deleteForManager(@PathVariable int id, @ModelAttribute("product") Product product) {
-			Product p= productDAO.getProductById(id);
-			productDAO.deleteProduct(id);
-			return "redirect:/mlogin/"+p.getUserId();
+			return productService.deleteForManager(id, product);
 		}
 		
 	
@@ -131,37 +117,26 @@ public class ProductController {
 		public String search(@RequestParam(value = "searchOption", required = false) String searchOption,
 		                     @RequestParam(value = "searchCriteria", required = false) String searchCriteria,
 		                     Model model) {
-		    try {
-		        if (searchOption != null && searchCriteria != null) {
-		            if (searchOption.equals("product_id")) {
-		                int product_id = Integer.parseInt(searchCriteria);
-		                Product product = productDAO.getProductById(product_id);
-		                model.addAttribute("product", product);
-		                return "pList";
-		            } else if (searchOption.equals("product_name")) {
-		                Product product = productDAO.getProductName(searchCriteria);
-		                model.addAttribute("product", product);
-		                return "pList";
-		            }
-		            
-		        }
-		        model.addAttribute("error", "Invalid search option");
-		        return "error";
-		    } catch (Exception e) {
-		        return "error";
-		    }
+		   return productService.search(searchOption, searchCriteria, model);
 		}
 		
 		
 		
-		@RequestMapping("/inventory/{userId}")
+		@RequestMapping("/ascending")
+		public String getAscending(Model m) {
+			return productService.getAscending(m);
+
+	}
+		@RequestMapping("/descending")
+		public String getDescending(Model m) {
+			return productService.getDescending(m);
+
+	}
+		
+		
+		@RequestMapping("/inventory/")
 		public String viewProductUnderUser(@PathVariable int userId, Model model) {
-		User user = userDao.getUserbyUser(userId);
-		System.out.println(userId);
-		List<Product> product = (List<Product>) productDAO.getProductByuserId(userId);
-		model.addAttribute("user", user);
-		model.addAttribute("product", product);
-		return "inventory";
+				return productService.viewProductUnderUser(userId, model);
 
 		}
 		
@@ -169,17 +144,7 @@ public class ProductController {
 		
 		@RequestMapping("/mlogin/{userId}")
 		public String viewProductUndermanger(@PathVariable int userId, Model model) {
-		User user = userDao.getUserbyUser(userId);
-		System.out.println(userId);
-		List<Product> product = (List<Product>) productDAO.getProductByuserId(userId);
-		model.addAttribute("user", user);
-		model.addAttribute("userId", userId);
-		model.addAttribute("product", product);
-		return "mlogin";
-
-		
-		
-		
+		return productService.viewProductUndermanger(userId, model);
 	
 		}
 		

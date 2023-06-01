@@ -44,7 +44,8 @@ public class ProductDAO {
  	        }  
  	    });
  	}
-	
+ 	
+ 
  	
     // UPDATE
     public void updateProduct(Product product) {
@@ -90,8 +91,8 @@ public class ProductDAO {
     	String sql = "SELECT * FROM product WHERE userId = ?";
     	return jdbcTemplate.query(sql, new Object[] { userId }, new ProductRowMapper());
     	}
-    
-    
+        
+     
  
     	class ProductRowMapper implements RowMapper<Product> {
     	@Override
@@ -107,13 +108,21 @@ public class ProductDAO {
     	return product;
     	}
     	}
-    
+    	
+    	
+    	public List<Product> getAscending() {
+     	    String sql="SELECT * FROM Product WHERE product_id != 11 ORDER BY product_name ASC";
+     	   return jdbcTemplate.query(sql, new Object[] { }, new ProductRowMapper());
+}
+
+    	public List<Product> getDecending() {
+     	    String sql="SELECT * FROM Product WHERE product_id != 11 ORDER BY product_name DESC";
+     	   return jdbcTemplate.query(sql, new Object[] { }, new ProductRowMapper());
 }
 
 
 
-
-
+}
 
 
 
