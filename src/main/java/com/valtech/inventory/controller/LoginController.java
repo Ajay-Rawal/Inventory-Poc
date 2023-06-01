@@ -16,7 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.valtech.dao.UserDao;
-import com.valtech.model.User;
+import com.valtech.vm.UserVm;
+
 
 @Controller
 public class LoginController{
@@ -35,7 +36,7 @@ public class LoginController{
 
 
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
-	public String loginUser(@Validated @ModelAttribute("user") User user,
+	public String loginUser(@Validated @ModelAttribute("user") UserVm user,
 	                        BindingResult result,
 	                        ModelMap m,
 	                        HttpSession httpSession) {
@@ -43,7 +44,7 @@ public class LoginController{
 	    String UserPassword = user.getPassword();
 
 	    try {
-	        User loggedInUser = userDao.findByEmail(UserEmail);
+	    	UserVm loggedInUser = userDao.findByEmail(UserEmail);
 
 	        if (loggedInUser != null && loggedInUser.getPassword().equals(UserPassword)) {
 	            httpSession.setAttribute("user", loggedInUser);

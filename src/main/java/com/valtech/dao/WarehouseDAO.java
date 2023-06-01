@@ -9,9 +9,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.valtech.model.Product;
-import com.valtech.model.User;
-import com.valtech.model.Warehouse;
+import com.valtech.vm.WarehouseVm;
+
+
 
 
 public class WarehouseDAO {
@@ -19,9 +19,9 @@ public class WarehouseDAO {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
-	public List<Warehouse> getAllWarehouses() {
+	public List<WarehouseVm> getAllWarehouses() {
 		String sql = "SELECT * FROM warehouse";
-		List<Warehouse> warehouses = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Warehouse.class));
+		List<WarehouseVm> warehouses = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(WarehouseVm.class));
 		return warehouses;
 	}
 	
@@ -29,20 +29,20 @@ public class WarehouseDAO {
 		
 	
 	
-	public Warehouse getWarehouseById(int id) {
+	public WarehouseVm getWarehouseById(int id) {
 		String sql = "SELECT * FROM warehouse WHERE Wid=?";
-		Warehouse warehouse = jdbcTemplate.queryForObject(sql, new Object[] { id },
-				new BeanPropertyRowMapper<>(Warehouse.class));
+		WarehouseVm warehouse = jdbcTemplate.queryForObject(sql, new Object[] { id },
+				new BeanPropertyRowMapper<>(WarehouseVm.class));
 		return warehouse;
 	}
 
-	public void addWarehouse(Warehouse warehouse) {
+	public void addWarehouse(WarehouseVm warehouse) {
 		String sql = "INSERT INTO warehouse (Wid, Wname, Waddress, product_id, inventory_id) VALUES (?, ?, ?, ?, ?)";
 		jdbcTemplate.update(sql, warehouse.getWid(), warehouse.getWname(), warehouse.getWaddress(),
 				warehouse.getProduct_id(), warehouse.getInventory_id());
 	}
 
-	public void updateWarehouse(Warehouse warehouse) {
+	public void updateWarehouse(WarehouseVm warehouse) {
 		String sql = "UPDATE warehouse SET Wname=?, Waddress=?, product_id=?, inventory_id=? WHERE Wid=?";
 		jdbcTemplate.update(sql, warehouse.getWname(), warehouse.getWaddress(), warehouse.getProduct_id(),
 				warehouse.getInventory_id(), warehouse.getWid());

@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.valtech.dao.ProductDAO;
 import com.valtech.dao.UserDao;
-import com.valtech.model.Product;
+
 import com.valtech.model.User;
 import com.valtech.service.ProductService;
+import com.valtech.vm.ProductVm;
 
 
 
@@ -51,13 +52,13 @@ public class ProductController {
 		}
 
 		@RequestMapping(value = "/editsaveproduct", method = RequestMethod.POST)
-		public String editsave(@ModelAttribute("product") Product product) {
+		public String editsave(@ModelAttribute("product") ProductVm product) {
 			return productService.editsave(product);
 		}
 		
 		
 		@RequestMapping(value = "/mlogin/editProductForManager/editsaveproductForManager", method = RequestMethod.POST)
-		public String editsaveForManager(@ModelAttribute("product") Product product) {
+		public String editsaveForManager(@ModelAttribute("product") ProductVm product) {
 			return productService.editsaveForManager(product);
 		}
 		
@@ -76,14 +77,14 @@ public class ProductController {
 		 
 
 		@RequestMapping(value = "/saveproduct", method = RequestMethod.POST)
-		public String save(@ModelAttribute("product") Product product) {
+		public String save(@ModelAttribute("product") ProductVm product) {
 		return productService.save(product);
 
 		}
 		
 		 	
 		@RequestMapping(value = "mlogin/addProductForManager/saveproductForManager", method = RequestMethod.POST)
-		public String saveForManager(@ModelAttribute("product") Product product) {
+		public String saveForManager(@ModelAttribute("product") ProductVm product) {
 		return productService.saveForManager(product);// will redirect to viewemp request mapping
 
 		}
@@ -96,7 +97,7 @@ public class ProductController {
 		
 		
 		@RequestMapping(value = "mlogin/deleteproductForManager/{id}", method = RequestMethod.GET)
-		public String deleteForManager(@PathVariable int id, @ModelAttribute("product") Product product) {
+		public String deleteForManager(@PathVariable int id, @ModelAttribute("product") ProductVm product) {
 			return productService.deleteForManager(id, product);
 		}
 		
@@ -134,7 +135,7 @@ public class ProductController {
 	}
 		
 		
-		@RequestMapping("/inventory/")
+		@RequestMapping("/inventory/{userId}")
 		public String viewProductUnderUser(@PathVariable int userId, Model model) {
 				return productService.viewProductUnderUser(userId, model);
 

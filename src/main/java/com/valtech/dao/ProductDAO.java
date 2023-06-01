@@ -9,29 +9,27 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.valtech.model.Product;
+
+import com.valtech.vm.ProductVm;
 
 public class ProductDAO {
     
 	@Autowired
     private JdbcTemplate jdbcTemplate;
     
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-    
+ 
     // CREATE
-    public void addProduct(Product product) {
+    public void addProduct(ProductVm product) {
         String sql = "INSERT INTO product (product_name, description, price, Pquantity) VALUES (?, ?, ?, ?)";
         jdbcTemplate.update(sql, product.getProduct_name(), product.getDescription(), product.getPrice(), product.getPquantity());
     }
     
 	
  // Get all Product
- 	public List<Product> getAllProducts(){  
- 	    return jdbcTemplate.query("select * from Product where product_id !=11",new RowMapper<Product>(){  
- 	        public Product mapRow(ResultSet rs, int row) throws SQLException {  
- 	        	Product li=new Product();  
+ 	public List<ProductVm> getAllProducts(){  
+ 	    return jdbcTemplate.query("select * from Product where product_id !=11",new RowMapper<ProductVm>(){  
+ 	        public ProductVm mapRow(ResultSet rs, int row) throws SQLException {  
+ 	        	ProductVm li=new ProductVm();  
  	            li.setProduct_id(rs.getInt(1));
  	            li.setProduct_name(rs.getString(2));
  	            li.setDescription(rs.getString(3));
@@ -48,20 +46,20 @@ public class ProductDAO {
  
  	
     // UPDATE
-    public void updateProduct(Product product) {
+    public void updateProduct(ProductVm product) {
         String sql = "UPDATE product SET product_name=?, description=?, price=?, Pquantity=? WHERE product_id=?";
         jdbcTemplate.update(sql, product.getProduct_name(), product.getDescription(), product.getPrice(), product.getPquantity(), product.getProduct_id());
     }
     
     
     // UPDATE for manager
-    public void updateProductForManager(Product product) {
+    public void updateProductForManager(ProductVm product) {
         String sql = "UPDATE product SET product_name=?, description=?, price=?, Pquantity=? ,userId=? WHERE product_id=?";
         jdbcTemplate.update(sql, product.getProduct_name(), product.getDescription(), product.getPrice(), product.getPquantity(),product.getUserId(), product.getProduct_id());
     }
  
             //save method
-  	     	public void save(Product product) {
+  	     	public void save(ProductVm product) {
   			String sql = "INSERT INTO product (product_id,product_name, description, price, Pquantity,Cid,userId) VALUES (?,?,?,?,?,?,?)";
   	        jdbcTemplate.update(sql, product.getProduct_id(),product.getProduct_name(), product.getDescription(), product.getPrice(), product.getPquantity(),product.getCid(),product.getUserId());
   	    }
@@ -75,29 +73,29 @@ public class ProductDAO {
     
     
        //READ
-        public Product getProductById(int product_id) {
+        public ProductVm getProductById(int product_id) {
         String sql = "SELECT * FROM product WHERE product_id=?";
-        Product product = jdbcTemplate.queryForObject(sql, new Object[] {product_id}, new BeanPropertyRowMapper<Product>(Product.class));
+        ProductVm product = jdbcTemplate.queryForObject(sql, new Object[] {product_id}, new BeanPropertyRowMapper<ProductVm>(ProductVm.class));
         return product;
     }
     
-        public Product getProductName(String product_name) {
+        public ProductVm getProductName(String product_name) {
             String sql = "SELECT * FROM product WHERE product_name=?";
-            Product product = jdbcTemplate.queryForObject(sql, new Object[] {product_name}, new BeanPropertyRowMapper<Product>(Product.class));
+            ProductVm product = jdbcTemplate.queryForObject(sql, new Object[] {product_name}, new BeanPropertyRowMapper<ProductVm>(ProductVm.class));
             return product;
         }
     
-        public List<Product> getProductByuserId(int userId) {
+        public List<ProductVm> getProductByuserId(int userId) {
     	String sql = "SELECT * FROM product WHERE userId = ?";
     	return jdbcTemplate.query(sql, new Object[] { userId }, new ProductRowMapper());
     	}
         
      
  
-    	class ProductRowMapper implements RowMapper<Product> {
+    	class ProductRowMapper implements RowMapper<ProductVm> {
     	@Override
-    	public Product mapRow(ResultSet rs, int rowNum) throws SQLException {
-    	Product product = new Product();
+    	public ProductVm mapRow(ResultSet rs, int rowNum) throws SQLException {
+    		ProductVm product = new ProductVm();
     	product.setProduct_id(rs.getInt(1));
     	product.setProduct_name(rs.getString(2));
     	product.setDescription(rs.getString(3));
@@ -110,12 +108,12 @@ public class ProductDAO {
     	}
     	
     	
-    	public List<Product> getAscending() {
+    	public List<ProductVm> getAscending() {
      	    String sql="SELECT * FROM Product WHERE product_id != 11 ORDER BY product_name ASC";
      	   return jdbcTemplate.query(sql, new Object[] { }, new ProductRowMapper());
 }
 
-    	public List<Product> getDecending() {
+    	public List<ProductVm> getDecending() {
      	    String sql="SELECT * FROM Product WHERE product_id != 11 ORDER BY product_name DESC";
      	   return jdbcTemplate.query(sql, new Object[] { }, new ProductRowMapper());
 }

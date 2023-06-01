@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.valtech.dao.UserDao;
-import com.valtech.model.User;
+
 import com.valtech.service.UserService;
+import com.valtech.vm.UserVm;
 
 @Controller
 public class UserControler {
@@ -55,14 +56,14 @@ public class UserControler {
 	}
 
 	@RequestMapping(value = "/editsave", method = RequestMethod.POST)
-	public String editsave(@ModelAttribute("user") User user) {
+	public String editsave(@ModelAttribute("user") UserVm user) {
 		return userService.editsave(user);
 	}
 
 	
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute("user") User user) {
+	public String save(@ModelAttribute("user") UserVm user) {
      return  userService.save(user);
  	}
 	

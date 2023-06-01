@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.valtech.model.User;
+import com.valtech.vm.UserVm;
 
 public interface UserService {
 
@@ -18,8 +19,12 @@ public interface UserService {
 	// edit the manager
 	String edit(int id, Model m);
 
-	String editsave(User user);
+	
 
-	String save(User user);
+
+
+	String save(UserVm user);
+
+	String editsave(UserVm user);
 
 }

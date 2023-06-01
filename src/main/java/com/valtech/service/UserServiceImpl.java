@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.valtech.dao.UserDao;
-import com.valtech.model.User;
+
+import com.valtech.vm.UserVm;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,17 +23,28 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public String getAllUsers(Model m) {
-		List<User> list = userDao.getUsers();
+		try {
+		List<UserVm> list = userDao.getUsers();
 		m.addAttribute("list", list);
 		System.out.println("list of roles displayed");
 		return "managerList";
+		}
+		catch(Exception e) {
+			return "error";
+		}
 	}
 
 	// deleteing the user manager
 	@Override
 	public String delete(@PathVariable int id) {
+		try {
 		userDao.deleteUser(id);
 		return "redirect:/managerList";
+		}
+		catch (Exception e) {
+			
+			return "error";
+		}
 	}
 	
 	
@@ -40,31 +52,50 @@ public class UserServiceImpl implements UserService {
 	
 	    @Override
 	    public String showform(Model m){  
-	    	m.addAttribute("command", new User());
+	    	try {
+	    	m.addAttribute("command", new UserVm());
 	    	return "addManager"; 
+	    	}
+	    	catch(Exception e) {
+	    		return "error";
+	    	}
 	    }  
 	
 	// edit the manager
 	@Override
 	public String edit(@PathVariable int id, Model m) {
-		User user = userDao.getUserbyUser(id);
+		try {
+			UserVm user = userDao.getUserbyUser(id);
 		m.addAttribute("command", user);
 		return "editManager";
+		}
+		catch (Exception e) {
+			return "error";// TODO: handle exception
+		}
 	}
 
 	@Override
-	public String editsave(@ModelAttribute("user") User user) {
+	public String editsave(@ModelAttribute("user") UserVm user) {
+		try {
 		userDao.updateUser(user);
 		return "redirect:/managerList";
+		}catch (Exception e) {
+			return "error";
+					// TODO: handle exception
+		}
 	}
 
 	
 
 	@Override
-	public String save(@ModelAttribute("user") User user) {
+	public String save(@ModelAttribute("user") UserVm user) {
+		try {
 		userDao.save(user);
 		return "redirect:/managerList";// will redirect to viewemp request mapping
-
+		}
+		catch (Exception e) {
+			return "error";// TODO: handle exception
+		}
 	}
 
 }

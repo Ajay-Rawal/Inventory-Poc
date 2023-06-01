@@ -7,11 +7,12 @@
      <!DOCTYPE html>
 <html>
 <head>
+<br>
 	<title>Product List</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-
+<a href="managerList" class="btn btn-success">Go Back</a>
 	<div class="container mt-5">
 		<h1 class="text-center mb-5">Product List</h1>
 	
@@ -61,28 +62,7 @@
 			<a href="descending" class="btn btn-success">Descending</a>
 		</div>
 		
-<!-- 		<div class="text-center mt-5">
-  <select onchange="sortProducts(this.value)">
-    <option value="ascending">Ascending</option>
-    <option value="descending">Descending</option>
-  </select>
-</div>
 
-
-
-<script>
-function sortProducts(sortOption) {
-
-	// Perform the sorting logic based on the selected option
-	if (sortOption === "ascending") {
-	// Sorting logic for ascending order
-	location.href = "ascending";
-	} else if (sortOption === "descending") {
-	// Sorting logic for descending order
-	location.href = "descending";
-	}
-	}
-</script> -->
 <br>
 <br>
 	

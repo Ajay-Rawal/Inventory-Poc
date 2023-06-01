@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.valtech.model.Warehouse;
+import com.valtech.vm.WarehouseVm;
 
 public interface WarehouseService {
 
@@ -16,12 +17,15 @@ public interface WarehouseService {
 
 	String showAddWarehouseForm(Model model);
 
-	String addWarehouse(Warehouse warehouse, BindingResult result);
+
 
 	String showEditWarehouseForm(int id, Model model);
 
-	String editWarehouse(int id, Warehouse warehouse, BindingResult result);
 
 	String deleteWarehouse(int id);
+
+	String editWarehouse(int id, WarehouseVm warehouse, BindingResult result);
+
+	String addWarehouse(WarehouseVm warehouse, BindingResult result);
 
 }

@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.valtech.dao.ProductDAO;
 import com.valtech.dao.UserDao;
 import com.valtech.dao.WarehouseDAO;
-import com.valtech.model.Product;
-import com.valtech.model.User;
-import com.valtech.model.Warehouse;
 import com.valtech.service.WarehouseService;
+import com.valtech.vm.WarehouseVm;
 
 @Controller
 public class WarehouseController {
@@ -54,7 +52,7 @@ public class WarehouseController {
 	}
 	
 	@PostMapping("/warehouse/add")
-	public String addWarehouse(@ModelAttribute("warehouse") Warehouse warehouse, BindingResult result) {
+	public String addWarehouse(@ModelAttribute("warehouse") WarehouseVm warehouse, BindingResult result) {
 		return warehouseService.addWarehouse(warehouse, result);
 	}
 	
@@ -64,7 +62,7 @@ public class WarehouseController {
 	}
 	
 	@PostMapping("/warehouse/edit/{id}")
-	public String editWarehouse(@PathVariable("id") int id, @ModelAttribute("warehouse") Warehouse warehouse,
+	public String editWarehouse(@PathVariable("id") int id, @ModelAttribute("warehouse") WarehouseVm warehouse,
 			BindingResult result) {
 		return warehouseService.editWarehouse(id, warehouse, result);
 	}

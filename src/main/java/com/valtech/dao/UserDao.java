@@ -10,7 +10,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.valtech.model.User;
+import com.valtech.vm.UserVm;
+
+
 
 
 public class UserDao {
@@ -20,44 +22,41 @@ public class UserDao {
 	private JdbcTemplate jdbcTemplate;
 	
 
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
-
+	
 	// Create a new user
-	public void createUser(User user) {
+	public void createUser(UserVm user) {
 		String sql = "INSERT INTO user (username, password, email, role) VALUES (?, ?, ?, ?)";
 		jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getRole());
 	}
 
 	
 	// Get a user by ID
-		public User getUserbyUser(int userId) {
+		public UserVm getUserbyUser(int userId) {
 			String sql = "SELECT * FROM user WHERE userId = ?";
-			User user = jdbcTemplate.queryForObject(sql, new Object[] { userId }, new BeanPropertyRowMapper<User>(User.class));
+			UserVm user = jdbcTemplate.queryForObject(sql, new Object[] { userId }, new BeanPropertyRowMapper<UserVm>(UserVm.class));
 			return user;
 		}
 	
 		
-		public User getUserbyUserName(int userId) {
+		public UserVm getUserbyUserName(int userId) {
 			String sql = "SELECT * FROM user WHERE userId = ?";
-			User user = jdbcTemplate.queryForObject(sql, new Object[] { userId }, new BeanPropertyRowMapper<User>(User.class));
+			UserVm user = jdbcTemplate.queryForObject(sql, new Object[] { userId }, new BeanPropertyRowMapper<UserVm>(UserVm.class));
 			return user;
 		}
 		
 		
 		
 		//save method
-		public int save(User user) {
+		public int save(UserVm user) {
 			String sql = "INSERT INTO user (username, password, email, role) VALUES (?, ?, ?, ?)";
 			return jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getRole());
 		}
 
 	// Get all users
-	public List<User> getUsers(){  
-	    return jdbcTemplate.query("select * from user where userId > 1",new RowMapper<User>(){  
-	        public User mapRow(ResultSet rs, int row) throws SQLException {  
-	            User li=new User();  
+	public List<UserVm> getUsers(){  
+	    return jdbcTemplate.query("select * from user where userId > 1",new RowMapper<UserVm>(){  
+	        public UserVm mapRow(ResultSet rs, int row) throws SQLException {  
+	        	UserVm li=new UserVm();  
 	            li.setUserId(rs.getInt(1));
 	            li.setUsername(rs.getString(2));
 	            li.setPassword(rs.getString(3));
@@ -70,7 +69,7 @@ public class UserDao {
 	
 	}
 	// Update a user
-	public void updateUser(User user) {
+	public void updateUser(UserVm user) {
 		String sql = "UPDATE user SET username = ?, password = ?, email = ?, role = ? WHERE userId = ?";
 		jdbcTemplate.update(sql, user.getUsername(), user.getPassword(), user.getEmail(), user.getRole(), user.getUserId());
 	}
@@ -81,23 +80,23 @@ public class UserDao {
 		jdbcTemplate.update(sql, userId);
 	}
 	
-	 public User findByEmail(String email) {
+	 public UserVm findByEmail(String email) {
          String sql = "SELECT * FROM User WHERE email = ?";
-         RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
+         RowMapper<UserVm> rowMapper = new BeanPropertyRowMapper<UserVm>(UserVm.class);
          return jdbcTemplate.queryForObject(sql, rowMapper, email);
      }
 
 		
-		  public User findByEmailAndPassword(String email, String password) {
+		  public UserVm findByEmailAndPassword(String email, String password) {
 		  String sql = "SELECT * FROM User WHERE email = ? AND password = ?"; 
-		  RowMapper<User>rowMapper = new BeanPropertyRowMapper<User>(User.class);
+		  RowMapper<UserVm>rowMapper = new BeanPropertyRowMapper<UserVm>(UserVm.class);
 		  return jdbcTemplate.queryForObject(sql, rowMapper, email, password); 
 		  }
 		 
      
-         public User findByNameAndPassword(String username, String password) {
+         public UserVm findByNameAndPassword(String username, String password) {
          String sql = "SELECT * FROM User WHERE username = ? AND password = ?";
-         RowMapper<User> rowMapper = new BeanPropertyRowMapper<User>(User.class);
+         RowMapper<UserVm> rowMapper = new BeanPropertyRowMapper<UserVm>(UserVm.class);
          return jdbcTemplate.queryForObject(sql, rowMapper, username, password);
      }
          

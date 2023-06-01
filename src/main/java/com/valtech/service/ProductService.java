@@ -3,6 +3,7 @@ package com.valtech.service;
 import org.springframework.ui.Model;
 
 import com.valtech.model.Product;
+import com.valtech.vm.ProductVm;
 
 public interface ProductService {
 
@@ -13,21 +14,21 @@ public interface ProductService {
 
 	String editForManager(int id, Model m);
 
-	String editsave(Product product);
+	String editsave(ProductVm product);
 
-	String editsaveForManager(Product product);
+	String editsaveForManager(ProductVm product);
 
 	String showform(Model m);
 
 	String showformManager(int userId, Model m);
 
-	String save(Product product);
+	String save(ProductVm product);
 
-	String saveForManager(Product product);
+	String saveForManager(ProductVm product);
 
 	String delete(int id);
 
-	String deleteForManager(int id, Product product);
+	String deleteForManager(int id, ProductVm product);
 
 	String search(String searchOption, String searchCriteria, Model model);
 

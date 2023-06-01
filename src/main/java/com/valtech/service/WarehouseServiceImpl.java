@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.valtech.dao.ProductDAO;
 import com.valtech.dao.UserDao;
 import com.valtech.dao.WarehouseDAO;
-import com.valtech.model.User;
-import com.valtech.model.Warehouse;
+
+
+import com.valtech.vm.UserVm;
+import com.valtech.vm.WarehouseVm;
 
 @Service
 public class WarehouseServiceImpl implements WarehouseService {
@@ -37,16 +39,21 @@ public class WarehouseServiceImpl implements WarehouseService {
 	
 	@Override
 	public String listWarehouses(Model model) {
-		List<Warehouse> list = warehouseDAO.getAllWarehouses();
+		try {
+		List<WarehouseVm> list = warehouseDAO.getAllWarehouses();
 		model.addAttribute("list", list);
 		return "warehouseList";
+		}
+		catch (Exception e) {
+			return "error";// TODO: handle exception
+		}
 	}
 	
 
 	@Override
 	public String search(@RequestParam("userId") int userId, Model model) {
 		try {
-	  User user = userDao.getUserbyUserName(userId);
+			UserVm user = userDao.getUserbyUserName(userId);
 	  model.addAttribute("user", user);
 	  System.out.println("mList");
 	  return "mList";
@@ -60,14 +67,19 @@ public class WarehouseServiceImpl implements WarehouseService {
 	
 	@Override
 	public String showAddWarehouseForm(Model model) {
-		Warehouse warehouse = new Warehouse();
+		try {
+			WarehouseVm warehouse = new WarehouseVm();
 		model.addAttribute("warehouse", warehouse);
 		return "addWarehouse";
+		}
+		catch (Exception e) {
+			return "error";// TODO: handle exception
+		}
 	}
 	
 	
 	@Override
-	public String addWarehouse(@ModelAttribute("warehouse") Warehouse warehouse, BindingResult result) {
+	public String addWarehouse(@ModelAttribute("warehouse") WarehouseVm warehouse, BindingResult result) {
 		if (result.hasErrors()) {
 			return "addWarehouse";
 		}
@@ -78,13 +90,13 @@ public class WarehouseServiceImpl implements WarehouseService {
 	
 	@Override
 	public String showEditWarehouseForm(@PathVariable("id") int id, Model model) {
-		Warehouse warehouse = warehouseDAO.getWarehouseById(id);
+		WarehouseVm warehouse = warehouseDAO.getWarehouseById(id);
 		model.addAttribute("warehouse", warehouse);
 		return "editWarehouse";
 	}
 	
 	@Override
-	public String editWarehouse(@PathVariable("id") int id, @ModelAttribute("warehouse") Warehouse warehouse,
+	public String editWarehouse(@PathVariable("id") int id, @ModelAttribute("warehouse") WarehouseVm warehouse,
 			BindingResult result) {
 		if (result.hasErrors()) {
 			return "editWarehouse";
