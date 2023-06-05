@@ -3,6 +3,7 @@ package com.valtech.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class UserDao {
 
 	// Get all users
 	public List<UserVm> getUsers(){  
-	    return jdbcTemplate.query("select * from user where userId > 1",new RowMapper<UserVm>(){  
+	    return jdbcTemplate.query("select * from user",new RowMapper<UserVm>(){  
 	        public UserVm mapRow(ResultSet rs, int row) throws SQLException {  
 	        	UserVm li=new UserVm();  
 	            li.setUserId(rs.getInt(1));
@@ -68,6 +69,45 @@ public class UserDao {
 	    });  
 	
 	}
+		
+		
+		
+//		public List<UserVm> getUsers(){  
+//		    return jdbcTemplate.query("select * from user where userName=?",new RowMapper<UserVm>(){  
+//		        public UserVm mapRow(ResultSet rs, int row) throws SQLException {  
+//		        	UserVm li=new UserVm();  
+//		            li.setUserId(rs.getInt(1));
+//		            li.setUsername(rs.getString(2));
+//		            li.setPassword(rs.getString(3));
+//		            li.setEmail(rs.getString(4));
+//		            li.setRole(rs.getString(5));
+//		          
+//		            return li;  
+//		        }  
+//		    });  
+//		
+//		}
+		
+		
+		
+//		public List<UserVm> getUsers() {
+//			String sql="select * from user where userId > 1";
+//		    return jdbcTemplate.query("select * from user where userId > 1", (rs, rowNum) -> {
+//		        UserVm user = new UserVm();
+//		        user.setUserId(rs.getInt(1));
+//		        user.setUsername(rs.getString(2));
+//		        user.setPassword(rs.getString(3));
+//		        user.setEmail(rs.getString(4));
+//		        user.setRole(rs.getString(5));
+//		        return user;
+//		    });
+//		}
+
+		
+		
+		
+		
+		
 	// Update a user
 	public void updateUser(UserVm user) {
 		String sql = "UPDATE user SET username = ?, password = ?, email = ?, role = ? WHERE userId = ?";

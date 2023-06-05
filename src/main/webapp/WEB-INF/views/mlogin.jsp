@@ -36,7 +36,7 @@
 
 	<div class="container">
 		<h1 class="text-center mb-5">Product List</h1>
-	
+
 		<table class="table table-bordered table-striped">
 			<thead class="thead-dark">
 				<tr>
@@ -62,7 +62,9 @@
 						<td>${product.price}</td>
 						<td>${product.pquantity}</td>
 						<td>${product.cid}</td>
+						
 						<td>${product.userId}</td> 
+						
 						<td><a href="editProductForManager/${product.product_id}" class="btn btn-primary">Edit</a></td>
 						<td><a href="deleteproductForManager/${product.product_id}" class="btn btn-danger">Delete</a></td>
 					</tr>

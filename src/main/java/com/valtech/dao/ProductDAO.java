@@ -43,7 +43,15 @@ public class ProductDAO {
  	    });
  	}
  	
- 
+    
+    
+
+    
+    
+    
+    
+    
+    
  	
     // UPDATE
     public void updateProduct(ProductVm product) {

@@ -1,6 +1,7 @@
 package com.valtech.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,18 +22,39 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 	
+//	@Override
+//	public String getAllUsers(Model m) {
+//		try {
+//		List<UserVm> list = userDao.getUsers();
+//		m.addAttribute("list", list);
+//		System.out.println("list of roles displayed");
+//		return "managerList";
+//		}
+//		catch(Exception e) {
+//			return "error";
+//		}
+//	}
+	
+	
 	@Override
 	public String getAllUsers(Model m) {
-		try {
-		List<UserVm> list = userDao.getUsers();
-		m.addAttribute("list", list);
-		System.out.println("list of roles displayed");
-		return "managerList";
-		}
-		catch(Exception e) {
-			return "error";
-		}
+	    try {
+	        List<UserVm> list = userDao.getUsers()
+	                .stream()
+	                .filter(user -> user.getUsername().contains("MANAGER"))
+	                .collect(Collectors.toList());
+	        
+	        m.addAttribute("list", list);
+	        System.out.println("List of users displayed");
+	        return "managerList";
+	    } catch (Exception e) {
+	        return "error";
+	    }
 	}
+
+	
+	
+	
 
 	// deleteing the user manager
 	@Override
